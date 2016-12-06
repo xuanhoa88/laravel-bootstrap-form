@@ -1,0 +1,26 @@
+{
+    "name": "llama-laravel/bootstrap-form",
+    "description": "Just a Formbuilder with some Bootstrap specific conveniences. Remembers old input, retrieves error messages and handles all your boilerplate Bootstrap markup automatically.",
+    "authors": [
+        {
+            "name": "XuaNguyen",
+            "email": "xuan.0211@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "laravelcollective/html": "^5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "mockery/mockery": "0.9.*",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Llama\\BootstrapForm": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
