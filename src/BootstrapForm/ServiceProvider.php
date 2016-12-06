@@ -1,18 +1,14 @@
 <?php 
 namespace Llama\BootstrapForm;
 
-use Collective\Html\FormBuilder;
-use AdamWathan\Form\FormBuilder;
-
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
-    protected $defer = false;
+    protected $defer = true;
 
     /**
      * Register the service provider.
@@ -22,41 +18,19 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerFormBuilder();
-        $this->registerBasicFormBuilder();
-        $this->registerHorizontalFormBuilder();
-        $this->registerBootForm();
+        $this->app->alias('form', 'Llama\BootstrapForm\FormBuilder');
     }
 
+    /**
+     * Register the form builder instance.
+     *
+     * @return void
+     */
     protected function registerFormBuilder()
     {
-        $this->app['adamwathan.form'] = $this->app->share(function ($app) {
-            $formBuilder = clone $this->app['form'];
-            $formBuilder->setErrorStore($app['adamwathan.form.errorstore']);
-            $formBuilder->setOldInputProvider($app['adamwathan.form.oldinput']);
-            $formBuilder->setToken($app['session.store']->getToken());
-
-            return $formBuilder;
-        });
-    }
-
-    protected function registerBasicFormBuilder()
-    {
-        $this->app['bootform.basic'] = $this->app->share(function ($app) {
-            return new BasicFormBuilder($app['adamwathan.form']);
-        });
-    }
-
-    protected function registerHorizontalFormBuilder()
-    {
-        $this->app['bootform.horizontal'] = $this->app->share(function ($app) {
-            return new HorizontalFormBuilder($app['adamwathan.form']);
-        });
-    }
-
-    protected function registerBootForm()
-    {
-        $this->app['bootform'] = $this->app->share(function ($app) {
-            return new BootForm($app['bootform.basic'], $app['bootform.horizontal']);
+        $this->app->singleton('form', function ($app) {
+            $form = new FormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->getToken());
+            return $form->setSessionStore($app['session.store']);
         });
     }
 
@@ -67,6 +41,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return ['bootstrapform'];
+        return ['form', 'Llama\BootstrapForm\FormBuilder'];
     }
 }
