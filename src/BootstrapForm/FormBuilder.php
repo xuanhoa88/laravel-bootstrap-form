@@ -108,6 +108,20 @@ class FormBuilder extends \Collective\Html\FormBuilder
     }
 
     /**
+     * Create a help block.
+     *
+     * @param  string $value
+     * @param  array  $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function help($value, array $options = [])
+    {
+    	$options = $this->handleHtmlClass($options, 'help-block');
+        return $this->toHtmlString('<p' . $this->html->attributes($options) . '>' . $value . '</p>');
+    }
+
+    /**
      * Create a checkable input field.
      *
      * @param  string $type
