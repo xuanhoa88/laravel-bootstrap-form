@@ -1,7 +1,9 @@
 <?php
 namespace Llama\BootstrapForm;
 
-class FormBuilder extends \Collective\Html\FormBuilder
+use Collective\Html\FormBuilder;
+
+class BootstrapFormBuilder extends FormBuilder
 {
 	/**
 	 * Handle element html class
@@ -17,7 +19,7 @@ class FormBuilder extends \Collective\Html\FormBuilder
 			$htmlClass = array_map('trim', explode(' ', $options['class']));
 		}
 		array_unshift($htmlClass, $extendHtmlClass);
-		$options['class'] = array_unique($htmlClass);
+		$options['class'] = implode(' ', array_unique($htmlClass));
 		
 		return $options;
 	}
@@ -105,5 +107,41 @@ class FormBuilder extends \Collective\Html\FormBuilder
     public function button($value = null, $options = [])
     {
         return parent::button($value, $this->handleHtmlClass($options, 'btn'));
+    }
+
+    /**
+     * Create a help block.
+     *
+     * @param  string $value
+     * @param  array  $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function help($value, array $options = [])
+    {
+    	$options = $this->handleHtmlClass($options, 'help-block');
+        return $this->toHtmlString('<p' . $this->html->attributes($options) . '>' . $value . '</p>');
+    }
+
+    /**
+     * Create a checkable input field.
+     *
+     * @param  string $type
+     * @param  string $name
+     * @param  mixed  $value
+     * @param  bool   $checked
+     * @param  array  $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    protected function checkable($type, $name, $value, $checked, $options)
+    {
+        $checked = $this->getCheckedState($type, $name, $value, $checked);
+
+        if ($checked) {
+            $options['checked'] = 'checked';
+        }
+
+        return parent::input($type, $name, $value, $options);
     }
 }

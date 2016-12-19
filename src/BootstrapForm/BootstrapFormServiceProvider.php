@@ -1,7 +1,9 @@
 <?php 
 namespace Llama\BootstrapForm;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+use Illuminate\Support\ServiceProvider;
+
+class BootstrapFormServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
@@ -18,7 +20,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         $this->registerFormBuilder();
-        $this->app->alias('form', 'Llama\BootstrapForm\FormBuilder');
+        $this->app->alias('form', BootstrapFormBuilder::class);
     }
 
     /**
@@ -29,7 +31,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     protected function registerFormBuilder()
     {
         $this->app->singleton('form', function ($app) {
-            $form = new FormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->getToken());
+            $form = new BootstrapFormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->getToken());
             return $form->setSessionStore($app['session.store']);
         });
     }
@@ -41,6 +43,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function provides()
     {
-        return ['form', 'Llama\BootstrapForm\FormBuilder'];
+        return ['form', BootstrapFormBuilder::class];
     }
 }
