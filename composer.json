@@ -8,6 +8,7 @@
             "role": "Dev"
         }
     ],
+    "version": "0.1",
     "license": "MIT",
     "require": {
         "php": ">=5.5",
@@ -21,12 +22,12 @@
     },
     "autoload": {
         "psr-0": {
-            "Llama\\BootstrapForm": "src"
+            "Llama\\BootstrapForm": "src/"
         }
     },
     "autoload-dev": {
       "psr-4": {
-        "Llama\\BootstrapForm\\Tests\\": "tests"
+        "Llama\\BootstrapForm\\Tests\\": "tests/"
       }
     },
     "minimum-stability": "dev",
