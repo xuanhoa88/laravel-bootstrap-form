@@ -128,7 +128,148 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['tabindex'] )) {
 			$options ['tabindex'] = ++ static::$tabIndex;
 		}
-		return parent::input ( $type, $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+		return parent::input ( $type, $name, $value, $options );
+	}
+	
+	/**
+	 * Create a text input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function text($name, $value = null, $options = []) {
+		return $this->input ( 'text', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a password input field.
+	 *
+	 * @param string $name        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function password($name, $options = []) {
+		return $this->input ( 'password', $name, '', $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create an e-mail input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function email($name, $value = null, $options = []) {
+		return $this->input ( 'email', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a tel input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function tel($name, $value = null, $options = []) {
+		return $this->input ( 'tel', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a number input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function number($name, $value = null, $options = []) {
+		return $this->input ( 'number', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a date input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function date($name, $value = null, $options = []) {
+		return $this->input ( 'date', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a datetime input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function datetime($name, $value = null, $options = []) {
+		return $this->input ( 'datetime', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a datetime-local input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function datetimeLocal($name, $value = null, $options = []) {
+		return $this->input ( 'datetime-local', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a time input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function time($name, $value = null, $options = []) {
+		return $this->input ( 'time', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a url input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function url($name, $value = null, $options = []) {
+		return $this->input ( 'url', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a file input field.
+	 *
+	 * @param string $name        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function file($name, $options = []) {
+		return $this->input ( 'file', $name, null, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
 	
 	/**
@@ -172,6 +313,46 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['tabindex'] = ++ static::$tabIndex;
 		}
 		return parent::select ( $name, $list, $selected, $this->appendClassToOptions ( $options, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a HTML reset input element.
+	 *
+	 * @param string $value        	
+	 * @param array $attributes        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function reset($value, $attributes = []) {
+		return $this->input ( 'reset', null, $value, $this->appendClassToOptions ( $attributes, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a HTML image input element.
+	 *
+	 * @param string $url        	
+	 * @param string $name        	
+	 * @param array $attributes        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function image($url, $name = null, $attributes = []) {
+		$attributes ['src'] = $this->url->asset ( $url );
+		
+		return $this->input ( 'image', $name, null, $this->appendClassToOptions ( $attributes, 'form-control' ) );
+	}
+	
+	/**
+	 * Create a color input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function color($name, $value = null, $options = []) {
+		return $this->input ( 'color', $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
 	
 	/**
@@ -240,10 +421,10 @@ class BootstrapFormBuilder extends FormBuilder {
 		}
 		
 		$name = str_replace ( '][', '-', $name );
-		$name = str_replace ( array (
+		$name = str_replace ( [ 
 				']',
 				'[' 
-		), '-', $name );
+		], '-', $name );
 		
 		return trim ( $name, '-' );
 	}
