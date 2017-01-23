@@ -8,6 +8,7 @@
             "role": "Dev"
         }
     ],
+    "version": "0.1",
     "license": "MIT",
     "require": {
         "php": ">=5.5",
@@ -20,9 +21,9 @@
         "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "Llama\\BootstrapForm": "src"
-        }
+       "psr-4": {
+            "Llama\\BootstrapForm\\": "src"
+       }
     },
     "autoload-dev": {
       "psr-4": {
