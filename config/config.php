@@ -1,6 +1,6 @@
 <?php
 return [ 
-		'useMessages' => true,
+		'useBuiltinMessage' => true,
 		'plugin' => 'JqueryValidation',
-		'route' => 'laravalid' 
+		'route' => 'js-validation-remote' 
 ];

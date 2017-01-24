@@ -3,10 +3,17 @@
 namespace Llama\BootstrapForm\Converter\Base;
 
 abstract class Container {
+	/**
+	 * @var array $customMethods
+	 */
 	protected $customMethods = [ ];
-	public function convert($name, $parameters) {
-		$methodName = strtolower ( $name );
-		
+	
+	/**
+	 * @param string $methodName
+	 * @param array $parameters
+	 * @return	mixed
+	 */
+	public function make($methodName, array $parameters) {
 		if (isset ( $this->customMethods [$methodName] )) {
 			return call_user_func_array ( $this->customMethods [$methodName], $parameters );
 		}
@@ -20,7 +27,17 @@ abstract class Container {
 		
 		return [ ];
 	}
-	public function extend($name, $function) {
-		$this->customMethods [$name] = $function;
+	
+	/**
+	 * Extends validation method
+	 * 
+	 * @param string $name
+	 * @param \Closure $fn
+	 * @return Container
+	 */
+	public function extend($name, \Closure $fn) {
+		$this->customMethods [$name] = $fn;
+		
+		return $this;
 	}
 }

@@ -195,7 +195,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['tabindex'] = ++ static::$tabIndex;
 		}
 		
-		$options = $this->converter->make(Helper::getFormAttribute($name)) + $options;
+		$options = $this->converter->make($name) + $options;
 		
 		return parent::input ( $type, $name, $value, $options );
 	}
@@ -360,7 +360,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['tabindex'] = ++ static::$tabIndex;
 		}
 		
-		$options = $this->converter->make(Helper::getFormAttribute($name)) + $options;
+		$options = $this->converter->make($name) + $options;
 		
 		return parent::textarea ( $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -385,7 +385,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['tabindex'] = ++ static::$tabIndex;
 		}
 		
-		$options = $this->converter->make(Helper::getFormAttribute($name)) + $options;
+		$options = $this->converter->make($name) + $options;
 		
 		return parent::select ( $name, $list, $selected, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -492,7 +492,7 @@ class BootstrapFormBuilder extends FormBuilder {
 	 */
     protected function checkable($type, $name, $value, $checked, $options)
     {
-        $options = $this->converter->make(Helper::getFormAttribute($name)) + $options;
+        $options = $this->converter->make($name) + $options;
 
         return parent::checkable($type, $name, $value, $checked, $options);
     }

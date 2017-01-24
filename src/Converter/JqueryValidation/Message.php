@@ -2,61 +2,74 @@
 
 namespace Llama\BootstrapForm\Converter\JqueryValidation;
 
-use Llama\BootstrapForm\Helper;
-use Lang;
 use Llama\BootstrapForm\Converter\Base\Message as BaseMessage;
 
 class Message extends BaseMessage {
-	public function ip($parsedRule, $attribute, $type) {
+	public function Required($parameters, $name) {
 		return [ 
-				'data-msg-ipv4' => Helper::getValidationMessage ( $attribute, $parsedRule ['name'] ) 
+				'data-msg-required' => $this->trans ( $name, 'required' ) 
 		];
 	}
-	public function same($parsedRule, $attribute, $type) {
+	public function Email($parameters, $name) {
 		return [ 
-				'data-msg-equalto' => Lang::get ( 'validation.' . $parsedRule ['name'], [ 
-						'attribute' => $attribute 
+				'data-msg-email' => $this->trans ( $name, 'email' ) 
+		];
+	}
+	public function Url($parameters, $name) {
+		return [ 
+				'data-msg-url' => $this->trans ( $name, 'url' ) 
+		];
+	}
+	public function Int($parameters, $name) {
+		return [ 
+				'data-msg-digits' => $this->trans ( $name, 'integer' ) 
+		];
+	}
+	public function Numeric($parameters, $name) {
+		return [ 
+				'data-msg-number' => $this->trans ( $name, 'numeric' ) 
+		];
+	}
+	public function Ip($parameters, $name) {
+		return [ 
+				'data-msg-ipv4' => $this->trans ( $name, 'ip' ) 
+		];
+	}
+	public function Same($parameters, $name) {
+		return [ 
+				'data-msg-equalto' => $this->trans ( $name, 'same', [ 
+						'attribute' => $name 
 				] ) 
 		];
 	}
-	public function alpha($parsedRule, $attribute, $type) {
+	public function Regex($parameters, $name) {
 		return [ 
-				'data-msg-regex' => Helper::getValidationMessage ( $attribute, $parsedRule ['name'] ) 
+				'data-msg-regex' => $this->trans ( $name, 'regex' ) 
 		];
 	}
-	public function alphanum($parsedRule, $attribute, $type) {
+	public function Alpha($parameters, $name) {
 		return [ 
-				'data-msg-regex' => Helper::getValidationMessage ( $attribute, $parsedRule ['name'] ) 
+				'data-msg-regex' => $this->trans ( $name, 'alpha' ) 
 		];
 	}
-	public function integer($parsedRule, $attribute, $type) {
+	public function Alphanum($parameters, $name) {
 		return [ 
-				'data-msg-number' => Helper::getValidationMessage ( $attribute, $parsedRule ['name'] ) 
+				'data-msg-regex' => $this->trans ( $name, 'alphanum' ) 
 		];
 	}
-	public function numeric($parsedRule, $attribute, $type) {
+	public function Image($parameters, $name) {
 		return [ 
-				'data-msg-number' => Helper::getValidationMessage ( $attribute, $parsedRule ['name'] ) 
+				'data-msg-accept' => $this->trans ( $name, 'image' ) 
 		];
 	}
-	public function max($parsedRule, $attribute, $type) {
-		$message = Helper::getValidationMessage ( $attribute, $parsedRule ['name'], [ 
-				'max' => $parsedRule ['parameters'] [0] 
-		], $type );
-		switch ($type) {
-			case 'numeric' :
-				return [ 
-						'data-msg-max' => $message 
-				];
-			default :
-				return [ 
-						'data-msg-maxlength' => $message 
-				];
-		}
+	public function Date($parameters, $name) {
+		return [ 
+				'data-msg-date' => $this->trans ( $name, 'date' ) 
+		];
 	}
-	public function min($parsedRule, $attribute, $type) {
-		$message = Helper::getValidationMessage ( $attribute, $parsedRule ['name'], [ 
-				'min' => $parsedRule ['parameters'] [0] 
+	public function Min($parameters, $name, $type) {
+		$message = $this->trans ( $name, 'min', [ 
+				'min' => $parameters [0] 
 		], $type );
 		switch ($type) {
 			case 'numeric' :
@@ -69,10 +82,25 @@ class Message extends BaseMessage {
 				];
 		}
 	}
-	public function between($parsedRule, $attribute, $type) {
-		$message = Helper::getValidationMessage ( $attribute, $parsedRule ['name'], [ 
-				'min' => $parsedRule ['parameters'] [0],
-				'max' => $parsedRule ['parameters'] [1] 
+	public function Max($parameters, $name, $type) {
+		$message = $this->trans ( $name, 'max', [ 
+				'max' => $parameters [0] 
+		], $type );
+		switch ($type) {
+			case 'numeric' :
+				return [ 
+						'data-msg-max' => $message 
+				];
+			default :
+				return [ 
+						'data-msg-maxlength' => $message 
+				];
+		}
+	}
+	public function Between($parameters, $name, $type) {
+		$message = $this->trans ( $name, 'between', [ 
+				'min' => $parameters [0],
+				'max' => $parameters [1] 
 		], $type );
 		switch ($type) {
 			case 'numeric' :
@@ -85,5 +113,15 @@ class Message extends BaseMessage {
 						'data-msg-maxlength' => $message 
 				];
 		}
+	}
+	public function Unique($parameters, $name) {
+		return [ 
+				'data-msg-remote' => $this->trans ( $name, 'unique' ) 
+		];
+	}
+	public function Exists($parameters, $name) {
+		return [ 
+				'data-msg-remote' => $this->trans ( $name, 'exists' ) 
+		];
 	}
 }
