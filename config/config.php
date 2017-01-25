@@ -1,6 +1,6 @@
 <?php
 return [ 
 		'useBuiltinMessage' => true,
-		'plugin' => 'JqueryValidation',
+		'plugin' => 'Llama\\BootstrapForm\\Converter\\JqueryValidation\\JqueryValidation',
 		'route' => 'js-validation-remote' 
 ];
