@@ -1,10 +1,18 @@
 BootForms
 ===============
-BootForms builds on top of my more general [Form](https://github.com/LaravelCollective/html) package by adding another layer of abstraction to rapidly generate markup for standard Bootstrap 3 forms. Probably not perfect for your super custom branded ready-for-release apps, but a *huge* time saver when you are still in the prototyping stage!
+BootForms builds on top of my more general [Form](https://github.com/LaravelCollective/html) package by adding another layer of abstraction to rapidly generate markup for standard Bootstrap3 forms. Probably not perfect for your super custom branded ready-for-release apps, but a *huge* time saver when you are still in the prototyping stage!
 
-- [Installation](#installing-with-composer)
+- [Installation](#installing)
+- [Feature Overview](#feature-overview)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Extending](#extending)
+- [Plugins and Supported Rules](#plugins-and-supported-rules)
+- [Licence](#licence)
 
 ### Feature Overview
+
 - Multi-Plugin Support  *//For now, there is just one :)*
     - `Jquery Validation` 
 - Extendible
