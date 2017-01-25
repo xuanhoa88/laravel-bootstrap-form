@@ -121,11 +121,6 @@ Form::getConverter()->getMessageTransformer()->extend('someotherrule', function(
     // some code
     return ['data-message-someotherrule' => 'Some other message'];
 });
-Form::getConverter()->getRouteTransformer()->extend('someotherrule', function($name, $parameters){
-    // some code
-    return ['valid' => false, 'messages' => 'Seriously dude, what kind of input is this?'];
-});
-
 ```
 Second, you can create your own converter (which extends baseconverter or any current plugin converter) in `Llama\BootstrapForm\Converter` namespace and change plugin configuration in config file with your own plugin name.
 
@@ -137,8 +132,7 @@ Second, you can create your own converter (which extends baseconverter or any cu
 To use Jquery Validation, change plugin to `Llama\BootstrapForm\Converter\JqueryValidation\Converter` in config file.
 
 | Rules          | Jquery Validation |
-| ---------------|:----------------:|
-| ---------------|:----------------:|
+| ---------------|----------------|
 | Accepted  | - |
 | Active URL  | - |
 | After (Date)  | - |
