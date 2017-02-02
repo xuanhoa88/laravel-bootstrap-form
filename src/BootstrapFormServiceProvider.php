@@ -20,9 +20,7 @@ class BootstrapFormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../config' => config_path('llama/form'),
-        ], 'config');
+        $this->registerNamespaces();
     }
 
     /**
@@ -43,10 +41,8 @@ class BootstrapFormServiceProvider extends ServiceProvider
      */
     protected function registerFormBuilder()
     {
-    	$this->registerResources();
-    	
         $this->app->singleton('form', function ($app) {
-        	$converter = __NAMESPACE__ . '\\Converter\\' . \Config::get('llama.form.plugin') . '\\Converter';
+        	$converter = $app['config']->get('llama.form.plugin');
             $form = new BootstrapFormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->getToken());
             $form->setConverter(new $converter());
             return $form->setSessionStore($app['session.store']);
@@ -54,22 +50,15 @@ class BootstrapFormServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the package resources.
-     *
-     * @return void
+     * Register package's namespaces.
      */
-    protected function registerResources()
+    protected function registerNamespaces()
     {
-        $userConfigFile = app()->configPath() . '/llama/form.php';
-        $packageConfigFile = __DIR__.'/../config/config.php';
-        $config = $this->app['files']->getRequire($packageConfigFile);
-
-        if (file_exists($userConfigFile)) {
-            $userConfig = $this->app['files']->getRequire($userConfigFile);
-            $config = array_replace_recursive($config, $userConfig);
-        }
-
-        $this->app['config']->set('llama.form', $config);
+        $configPath = __DIR__ . '/../config/config.php';
+        $this->mergeConfigFrom($configPath, 'llama.form');
+        $this->publishes([
+            $configPath => config_path('llama/form.php'),
+        ], 'config');
     }
 
     /**
