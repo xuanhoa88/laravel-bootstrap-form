@@ -120,7 +120,7 @@ class Rule extends BaseRule {
 	}
 	public function Unique($parameters, $attribute, $type) {
 		list ( $table, $column, $except, $idColumn ) = $parameters;
-		$route = \Config::get ( 'jsvalidation.route' );
+		$route = \Config::get ( 'llama.form.route' );
 		
 		return [ 
 				'data-rule-remote' => url ( '/' . $route ) . '?name=' . $attribute . '&rule=unique&' . http_build_query ( compact ( 'table', 'column', 'except', 'idColumn' ) ) 
