@@ -128,7 +128,7 @@ class Rule extends BaseRule {
 	}
 	public function Exists($parameters, $attribute) {
 		list ( $table, $column ) = $parameters;
-		$route = \Config::get ( 'jsvalidation.route' );
+		$route = \Config::get ( 'llama.form.route' );
 		
 		return [ 
 				'data-rule-remote' => url ( '/' . $route ) . '?name=' . $attribute . '&rule=exists&' . http_build_query ( compact ( 'table', 'column' ) ) 
