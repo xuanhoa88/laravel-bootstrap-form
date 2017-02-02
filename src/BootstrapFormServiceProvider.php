@@ -21,7 +21,7 @@ class BootstrapFormServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config' => config_path('jsvalidation'),
+            __DIR__.'/../config' => config_path('llama/form'),
         ], 'config');
     }
 
@@ -46,7 +46,7 @@ class BootstrapFormServiceProvider extends ServiceProvider
     	$this->registerResources();
     	
         $this->app->singleton('form', function ($app) {
-        	$converter = __NAMESPACE__ . '\\Converter\\' . \Config::get('jsvalidation.plugin') . '\\Converter';
+        	$converter = __NAMESPACE__ . '\\Converter\\' . \Config::get('llama.form.plugin') . '\\Converter';
             $form = new BootstrapFormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->getToken());
             $form->setConverter(new $converter());
             return $form->setSessionStore($app['session.store']);
@@ -60,7 +60,7 @@ class BootstrapFormServiceProvider extends ServiceProvider
      */
     protected function registerResources()
     {
-        $userConfigFile = app()->configPath() . '/jsvalidation.php';
+        $userConfigFile = app()->configPath() . '/llama/form.php';
         $packageConfigFile = __DIR__.'/../config/config.php';
         $config = $this->app['files']->getRequire($packageConfigFile);
 
@@ -69,7 +69,7 @@ class BootstrapFormServiceProvider extends ServiceProvider
             $config = array_replace_recursive($config, $userConfig);
         }
 
-        $this->app['config']->set('llama.jsvalidation', $config);
+        $this->app['config']->set('llama.form', $config);
     }
 
     /**
