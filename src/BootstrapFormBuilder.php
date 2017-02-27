@@ -594,15 +594,6 @@ class BootstrapFormBuilder extends FormBuilder {
 	 * @return void
 	 */
 	protected function makeTabIndex(array &$options) {
-		if (! isset ( $options ['tabindex'] )) {
-			if (! (isset ( $options ['disabled'] ) || isset ( $options ['readonly'] ) || in_array ( 'disabled', $options ) || in_array ( 'readonly', $options ))) {
-				$options ['tabindex'] = ++ static::$tabIndex;
-			}
-		} else {
-			$tabIndex = ( int ) $options ['tabindex'];
-			if (static::$tabIndex <= $tabIndex) {
-				static::$tabIndex = ++ $tabIndex;
-			}
-		}
+		
 	}
 }
