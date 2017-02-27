@@ -404,6 +404,7 @@ class BootstrapFormBuilder extends FormBuilder {
 	 * @return \Illuminate\Support\HtmlString
 	 */
 	public function reset($value, $attributes = []) {
+		$options ['tabindex'] = - 1;
 		return $this->input ( 'reset', null, $value, $this->appendClassToOptions ( $attributes, 'form-control' ) );
 	}
 	
@@ -447,6 +448,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['id'] )) {
 			$options ['id'] = $this->getId ( $value );
 		}
+		$options ['tabindex'] = - 1;
 		return parent::submit ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
 	
@@ -462,6 +464,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['id'] )) {
 			$options ['id'] = $this->getId ( $value );
 		}
+		$options ['tabindex'] = - 1;
 		return parent::button ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
 	
@@ -596,12 +599,13 @@ class BootstrapFormBuilder extends FormBuilder {
 	protected function makeTabIndex(array &$options) {
 		if (! isset ( $options ['tabindex'] )) {
 			if (! (isset ( $options ['disabled'] ) || isset ( $options ['readonly'] ) || in_array ( 'disabled', $options ) || in_array ( 'readonly', $options ))) {
-				$options ['tabindex'] = ++ static::$tabIndex;
+				$options ['tabindex'] = 0;
+			} else {
+				$options ['tabindex'] = -1;
 			}
 		} else {
-			$tabIndex = ( int ) $options ['tabindex'];
-			if (static::$tabIndex <= $tabIndex) {
-				static::$tabIndex = ++ $tabIndex;
+			if (0 <= ( int ) $options ['tabindex']) {
+				$options ['tabindex'] = 0;
 			}
 		}
 	}
