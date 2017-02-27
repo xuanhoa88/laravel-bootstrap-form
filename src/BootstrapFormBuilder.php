@@ -21,50 +21,48 @@ class BootstrapFormBuilder extends FormBuilder {
 	private static $tabIndex = 0;
 	
 	/**
+	 *
 	 * @var Converter $converter
 	 */
 	private $converter;
 	
-    /**
-     * Set binded converter class.
-     * 
-     * @param Converter $converter
-     * @return BootstrapFormBuilder
-     */
-    public function setConverter($converter) 
-    {
-    	$this->converter = $converter;
-    	
-    	return $this;
-    }
-
-    /**
-     * Set rules for validation.
-     *
-     * @param array $rules
-     * @return BootstrapFormBuilder
-     */
-    public function setValidateRules(array $rules)
-    {
-        $this->getConverter()->set($rules);
-        
-        return $this;
-    }
-
-    /**
-     * Get binded converter class.
-     *
-     * @return Converter
-     */
-    public function getConverter()
-    {
-        return $this->converter;
-    }
+	/**
+	 * Set binded converter class.
+	 *
+	 * @param Converter $converter        	
+	 * @return BootstrapFormBuilder
+	 */
+	public function setConverter($converter) {
+		$this->converter = $converter;
+		
+		return $this;
+	}
+	
+	/**
+	 * Set rules for validation.
+	 *
+	 * @param array $rules        	
+	 * @return BootstrapFormBuilder
+	 */
+	public function setValidateRules(array $rules) {
+		$this->getConverter ()->set ( $rules );
+		
+		return $this;
+	}
+	
+	/**
+	 * Get binded converter class.
+	 *
+	 * @return Converter
+	 */
+	public function getConverter() {
+		return $this->converter;
+	}
 	
 	/**
 	 * Open up a new HTML form.
 	 *
-	 * @param array $options
+	 * @param array $options        	
 	 * @return \Illuminate\Support\HtmlString
 	 */
 	public function open(array $options = []) {
@@ -84,28 +82,27 @@ class BootstrapFormBuilder extends FormBuilder {
 		}
 		
 		// Set validate rules
-		if (!empty($options['rules'])) {
-			$this->setValidateRules($options['rules']);
-			unset($options['rules']);
+		if (! empty ( $options ['rules'] )) {
+			$this->setValidateRules ( $options ['rules'] );
+			unset ( $options ['rules'] );
 		}
 		
 		return parent::open ( $options );
 	}
-
-    /**
-     * Create a new model based form builder.
-     *
-     * @param	array $model
-     * @param	array $options
-     * @param	array $rules
-     * @see Illuminate\Html\FormBuilder
-     */
-    public function model($model, array $options = [], array $rules = [])
-    {
-        $this->setValidateRules($rules);
-
-        return parent::model($model, $options);
-    }
+	
+	/**
+	 * Create a new model based form builder.
+	 *
+	 * @param array $model        	
+	 * @param array $options        	
+	 * @param array $rules        	
+	 * @see Illuminate\Html\FormBuilder
+	 */
+	public function model($model, array $options = [], array $rules = []) {
+		$this->setValidateRules ( $rules );
+		
+		return parent::model ( $model, $options );
+	}
 	
 	/**
 	 * Close the current form.
@@ -116,7 +113,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		static::$tabIndex = 0;
 		
 		// Reset validation rules.
-		$this->getConverter()->reset();
+		$this->getConverter ()->reset ();
 		
 		return parent::close ();
 	}
@@ -190,14 +187,26 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['id'] = $this->getId ( $name );
 		}
 		
-		// Add tabindex tag.
-		if (! isset ( $options ['tabindex'] )) {
-			$options ['tabindex'] = ++ static::$tabIndex;
-		}
+		// Add tabindex.
+		$this->makeTabIndex ( $options );
 		
-		$options = $this->converter->make($name) + $options;
+		$options = $this->converter->make ( $name ) + $options;
 		
 		return parent::input ( $type, $name, $value, $options );
+	}
+	
+	/**
+	 * Create a hidden input field.
+	 *
+	 * @param string $name        	
+	 * @param string $value        	
+	 * @param array $options        	
+	 *
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	public function hidden($name, $value = null, $options = []) {
+		$options ['tabindex'] = - 1;
+		return $this->input ( 'hidden', $name, $value, $options );
 	}
 	
 	/**
@@ -355,12 +364,10 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['id'] = $this->getId ( $name );
 		}
 		
-		// Add tabindex tag.
-		if (! isset ( $options ['tabindex'] )) {
-			$options ['tabindex'] = ++ static::$tabIndex;
-		}
+		// Add tabindex.
+		$this->makeTabIndex ( $options );
 		
-		$options = $this->converter->make($name) + $options;
+		$options = $this->converter->make ( $name ) + $options;
 		
 		return parent::textarea ( $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -380,12 +387,10 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['id'] = $this->getId ( $name );
 		}
 		
-		// Add tabindex tag.
-		if (! isset ( $options ['tabindex'] )) {
-			$options ['tabindex'] = ++ static::$tabIndex;
-		}
+		// Add tabindex.
+		$this->makeTabIndex ( $options );
 		
-		$options = $this->converter->make($name) + $options;
+		$options = $this->converter->make ( $name ) + $options;
 		
 		return parent::select ( $name, $list, $selected, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -482,20 +487,19 @@ class BootstrapFormBuilder extends FormBuilder {
 	/**
 	 * Create a checkable input field.
 	 *
-	 * @param  string $type
-	 * @param  string $name
-	 * @param  mixed  $value
-	 * @param  bool   $checked
-	 * @param  array  $options
+	 * @param string $type        	
+	 * @param string $name        	
+	 * @param mixed $value        	
+	 * @param bool $checked        	
+	 * @param array $options        	
 	 *
 	 * @return \Illuminate\Support\HtmlString
 	 */
-    protected function checkable($type, $name, $value, $checked, $options)
-    {
-        $options = $this->converter->make($name) + $options;
-
-        return parent::checkable($type, $name, $value, $checked, $options);
-    }
+	protected function checkable($type, $name, $value, $checked, $options) {
+		$options = $this->converter->make ( $name ) + $options;
+		
+		return parent::checkable ( $type, $name, $value, $checked, $options );
+	}
 	
 	/**
 	 * Get element id
@@ -581,5 +585,24 @@ class BootstrapFormBuilder extends FormBuilder {
 		$options ['class'] = implode ( ' ', array_unique ( $htmlClass ) );
 		
 		return $options;
+	}
+	
+	/**
+	 * Make tabindex
+	 *
+	 * @param array $options        	
+	 * @return void
+	 */
+	protected function makeTabIndex(array &$options) {
+		if (! isset ( $options ['tabindex'] )) {
+			if (! (isset ( $options ['disabled'] ) || isset ( $options ['readonly'] ) || in_array ( 'disabled', $options ) || in_array ( 'readonly', $options ))) {
+				$options ['tabindex'] = ++ static::$tabIndex;
+			}
+		} else {
+			$tabIndex = ( int ) $options ['tabindex'];
+			if (static::$tabIndex <= $tabIndex) {
+				static::$tabIndex = ++ $tabIndex;
+			}
+		}
 	}
 }
