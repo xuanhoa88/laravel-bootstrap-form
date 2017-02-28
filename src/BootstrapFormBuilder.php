@@ -404,7 +404,6 @@ class BootstrapFormBuilder extends FormBuilder {
 	 * @return \Illuminate\Support\HtmlString
 	 */
 	public function reset($value, $attributes = []) {
-		$options ['tabindex'] = - 1;
 		return $this->input ( 'reset', null, $value, $this->appendClassToOptions ( $attributes, 'form-control' ) );
 	}
 	
@@ -448,7 +447,6 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['id'] )) {
 			$options ['id'] = $this->getId ( $value );
 		}
-		$options ['tabindex'] = - 1;
 		return parent::submit ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
 	
@@ -464,7 +462,6 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['id'] )) {
 			$options ['id'] = $this->getId ( $value );
 		}
-		$options ['tabindex'] = - 1;
 		return parent::button ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
 	
