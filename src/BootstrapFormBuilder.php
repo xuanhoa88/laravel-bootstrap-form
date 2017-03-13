@@ -87,7 +87,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			unset ( $options ['rules'] );
 		}
 		
-		return parent::open ( $options );
+		return parent::open ( array_filter($options) );
 	}
 	
 	/**
@@ -136,6 +136,8 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options = $this->appendClassToOptions ( $options, 'has-error' );
 		}
 		
+		$options = array_filter($options);
+		
 		// If a label is given, we set it up here. Otherwise, we will just
 		// set it to an empty string.
 		$attributes = [ ];
@@ -169,6 +171,7 @@ class BootstrapFormBuilder extends FormBuilder {
 	 * @return \Illuminate\Support\HtmlString
 	 */
 	public function label($name, $value = null, $options = [], $escape_html = true) {
+		$options = array_filter($options);
 		return parent::label ( $this->getId ( $name ), $value, $this->appendClassToOptions ( $options, 'control-label' ), $escape_html );
 	}
 	
@@ -191,6 +194,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		$this->makeTabIndex ( $options );
 		
 		$options = $this->converter->make ( $name ) + $options;
+		$options = array_filter($options);
 		
 		return parent::input ( $type, $name, $value, $options );
 	}
@@ -368,6 +372,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		$this->makeTabIndex ( $options );
 		
 		$options = $this->converter->make ( $name ) + $options;
+		$options = array_filter($options);
 		
 		return parent::textarea ( $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -391,6 +396,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		$this->makeTabIndex ( $options );
 		
 		$options = $this->converter->make ( $name ) + $options;
+		$options = array_filter($options);
 		
 		return parent::select ( $name, $list, $selected, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -447,6 +453,9 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['id'] )) {
 			$options ['id'] = $this->getId ( $value );
 		}
+		
+		$options = array_filter($options);
+		
 		return parent::submit ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
 	
@@ -462,6 +471,9 @@ class BootstrapFormBuilder extends FormBuilder {
 		if (! isset ( $options ['id'] )) {
 			$options ['id'] = $this->getId ( $value );
 		}
+		
+		$options = array_filter($options);
+		
 		return parent::button ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
 	
@@ -476,6 +488,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		// Check to see if we are to include the formatted help block
 		if ($label = $this->getFormattedErrors ( $name )) {
 			$options = $this->appendClassToOptions ( $options, 'help-block' );
+			$options = array_filter($options);
 			
 			// Append the errors to the group and close it out.
 			return $this->toHtmlString ( '<p' . $this->html->attributes ( $options ) . '>' . $label . '</p>' );
@@ -497,6 +510,7 @@ class BootstrapFormBuilder extends FormBuilder {
 	 */
 	protected function checkable($type, $name, $value, $checked, $options) {
 		$options = $this->converter->make ( $name ) + $options;
+		$options = array_filter($options);
 		
 		return parent::checkable ( $type, $name, $value, $checked, $options );
 	}
