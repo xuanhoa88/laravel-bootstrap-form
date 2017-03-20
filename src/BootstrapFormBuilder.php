@@ -87,7 +87,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			unset ( $options ['rules'] );
 		}
 		
-		return parent::open ( array_filter($options) );
+		return parent::open ( $this->removeInvalidAttributes($options) );
 	}
 	
 	/**
@@ -136,7 +136,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options = $this->appendClassToOptions ( $options, 'has-error' );
 		}
 		
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		// If a label is given, we set it up here. Otherwise, we will just
 		// set it to an empty string.
@@ -171,7 +171,7 @@ class BootstrapFormBuilder extends FormBuilder {
 	 * @return \Illuminate\Support\HtmlString
 	 */
 	public function label($name, $value = null, $options = [], $escape_html = true) {
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		return parent::label ( $this->getId ( $name ), $value, $this->appendClassToOptions ( $options, 'control-label' ), $escape_html );
 	}
 	
@@ -194,7 +194,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		$this->makeTabIndex ( $options );
 		
 		$options = $this->converter->make ( $name ) + $options;
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		return parent::input ( $type, $name, $value, $options );
 	}
@@ -372,7 +372,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		$this->makeTabIndex ( $options );
 		
 		$options = $this->converter->make ( $name ) + $options;
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		return parent::textarea ( $name, $value, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -396,7 +396,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		$this->makeTabIndex ( $options );
 		
 		$options = $this->converter->make ( $name ) + $options;
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		return parent::select ( $name, $list, $selected, $this->appendClassToOptions ( $options, 'form-control' ) );
 	}
@@ -454,7 +454,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['id'] = $this->getId ( $value );
 		}
 		
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		return parent::submit ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
@@ -472,7 +472,7 @@ class BootstrapFormBuilder extends FormBuilder {
 			$options ['id'] = $this->getId ( $value );
 		}
 		
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		return parent::button ( $value, $this->appendClassToOptions ( $options, 'btn' ) );
 	}
@@ -488,7 +488,7 @@ class BootstrapFormBuilder extends FormBuilder {
 		// Check to see if we are to include the formatted help block
 		if ($label = $this->getFormattedErrors ( $name )) {
 			$options = $this->appendClassToOptions ( $options, 'help-block' );
-			$options = array_filter($options);
+			$options = $this->removeInvalidAttributes($options);
 			
 			// Append the errors to the group and close it out.
 			return $this->toHtmlString ( '<p' . $this->html->attributes ( $options ) . '>' . $label . '</p>' );
@@ -510,7 +510,7 @@ class BootstrapFormBuilder extends FormBuilder {
 	 */
 	protected function checkable($type, $name, $value, $checked, $options) {
 		$options = $this->converter->make ( $name ) + $options;
-		$options = array_filter($options);
+		$options = $this->removeInvalidAttributes($options);
 		
 		return parent::checkable ( $type, $name, $value, $checked, $options );
 	}
@@ -619,5 +619,22 @@ class BootstrapFormBuilder extends FormBuilder {
 				$options ['tabindex'] = 0;
 			}
 		}
+	}
+	
+	/**
+	 * Remove invalid attributes
+	 * 
+	 * @param array $options
+	 * @return array
+	 */
+	protected function removeInvalidAttributes(array $options)
+	{
+		return array_filter($options, function($v, $k) {
+			if (trim($k) === '') {
+				return (is_string($v) || is_numeric($v)) && !(trim($v) === '');
+			}
+			
+			return is_scalar($v);
+		}, ARRAY_FILTER_USE_BOTH);
 	}
 }
