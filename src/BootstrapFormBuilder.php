@@ -634,7 +634,16 @@ class BootstrapFormBuilder extends FormBuilder {
 				return (is_string($v) || is_numeric($v)) && !(trim($v) === '');
 			}
 			
-			return $v;
+			if (is_null($v)) {
+				return false;
+			}
+			if (is_string($v) && trim($v) === '') {
+				return false;
+			} 
+			if ((is_array($v) || $v instanceof Countable) && count($v) < 1) {
+				return false;
+			}
+			return true;
 		}, ARRAY_FILTER_USE_BOTH);
 	}
 }
